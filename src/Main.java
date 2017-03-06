@@ -31,13 +31,23 @@ public class Main {
 
 		// Score the first page as the key
 		AnswerSheet key = markReader.processPageImage(images.get(0));
+		//key.print();
 
 		for (int i = 1; i < images.size(); i++) {
 			PImage image = images.get(i);
 
 			AnswerSheet answers = markReader.processPageImage(image);
-
-			// do something with answers
+			scoredSheets.add(answers);
+		}
+		
+		for(int i = 0; i < scoredSheets.size(); i++){
+			AnswerSheet answers = scoredSheets.get(i);
+			int score = 0;
+			for(int q = 0; q < key.getNumQuestions(); q++)
+				if(key.get(q) == answers.get(q)) score++;
+			int percent = (score * 100) / (key.getNumQuestions());
+			System.out.println(score + " " + percent + "%");
+			//scoredSheets.get(i).print();
 		}
 	}
 }
